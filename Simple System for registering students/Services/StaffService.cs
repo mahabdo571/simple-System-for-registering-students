@@ -25,7 +25,7 @@ namespace Simple_System_for_registering_students.Services
         {
             var staff = await GetByEmailAsync(email);
 
-            if (staff == null || !BCrypt.Net.BCrypt.Verify(password, staff.Password)) 
+            if (staff == null || !BCrypt.Net.BCrypt.Verify(password, staff.PasswordHash)) 
             {
                 return null;
             }

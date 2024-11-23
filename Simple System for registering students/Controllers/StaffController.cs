@@ -70,11 +70,11 @@ namespace Simple_System_for_registering_students.Controllers
             }
 
            
-            staff.Name = registerDto.Name;
+            staff.Username = registerDto.UserName;
             staff.Email = registerDto.Email;
             if (!string.IsNullOrEmpty(registerDto.Password))
             {
-                staff.Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password); 
+                staff.PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password); 
             }
 
             await _staffService.UpdateStaffAsync(staff);

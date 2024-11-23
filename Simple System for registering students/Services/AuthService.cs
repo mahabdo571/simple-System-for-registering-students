@@ -26,7 +26,7 @@ namespace Simple_System_for_registering_students.Services
         {
             var staff = await _staffService.GetByEmailAsync(email);
 
-            if (staff == null || !BCrypt.Net.BCrypt.Verify(password, staff.Password))
+            if (staff == null || !BCrypt.Net.BCrypt.Verify(password, staff.PasswordHash))
             {
                 return null; 
             }
@@ -39,7 +39,7 @@ namespace Simple_System_for_registering_students.Services
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, staff.Id.ToString()),
-                new Claim(ClaimTypes.Name, staff.Name),
+                new Claim(ClaimTypes.Name, staff.Username),
                 new Claim(ClaimTypes.Email, staff.Email)
             };
 

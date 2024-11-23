@@ -1,15 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using Simple_System_for_registering_students.DTOs;
 using Simple_System_for_registering_students.Models;
-using Simple_System_for_registering_students.Repositories;
-using Simple_System_for_registering_students.Services;
 using Simple_System_for_registering_students.Services.Interface;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 
 namespace Simple_System_for_registering_students.Controllers
@@ -32,7 +24,7 @@ namespace Simple_System_for_registering_students.Controllers
 
   
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerModel)
         {
             if (registerModel == null)
             {
@@ -57,8 +49,13 @@ namespace Simple_System_for_registering_students.Controllers
             var staff = new Staff
             {
                 Email = registerModel.Email,
-                Password = hashedPassword,
-                Name = registerModel.Name
+                PasswordHash = hashedPassword,
+                Username = registerModel.UserName,
+                Role = "-1",
+                
+
+
+
             };
 
             await _staffService.RegisterStaffAsync(staff);
@@ -69,7 +66,7 @@ namespace Simple_System_for_registering_students.Controllers
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginModel)
         {
             if (loginModel == null)
             {

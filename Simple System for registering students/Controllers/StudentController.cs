@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Simple_System_for_registering_students.DTOs;
 using Simple_System_for_registering_students.Services.Interface;
 
 namespace Simple_System_for_registering_students.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
@@ -25,7 +27,7 @@ namespace Simple_System_for_registering_students.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent([FromBody] StudentDTO studentDTO)
+        public async Task<IActionResult> AddStudent([FromBody] StudentDto studentDTO)
         {
             var student = await _service.AddStudentAsync(studentDTO);
             return CreatedAtAction(nameof(GetAllStudents), new { id = student.Id }, student);

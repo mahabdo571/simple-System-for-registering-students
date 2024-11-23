@@ -21,12 +21,12 @@ namespace Simple_System_for_registering_students.Services
             return await _context.Students.ToListAsync();
         }
 
-        public async Task<Student> AddStudentAsync(StudentDTO studentDTO)
+        public async Task<Student> AddStudentAsync(StudentDto studentDTO)
         {
             var student = new Student
             {
-                Name = studentDTO.Name,
-                Age = studentDTO.Age,
+                FirstName = studentDTO.FirstName,
+                LastName = studentDTO.LastName,
                 Email = studentDTO.Email
             };
 
