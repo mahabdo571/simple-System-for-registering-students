@@ -14,9 +14,13 @@ namespace Simple_System_for_registering_students.Repositories
             _context = context;
         }
 
-        public async Task<Staff> GetStaffByEmailAsync(string email)
+        public async Task<Staff?> GetStaffByEmailAsync(string email)
         {
-            return await _context.Staffs.FirstOrDefaultAsync(s => s.Email == email);
+            var Staff = await _context.Staffs.FirstOrDefaultAsync(s => s.Email == email);
+
+          return  Staff is not null ? Staff : null;
+
+         
         }
 
     

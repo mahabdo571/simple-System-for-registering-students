@@ -18,11 +18,11 @@ namespace Simple_System_for_registering_students.Controllers
         private readonly IStaffService _staffService;
 
         private readonly IConfiguration _configuration;
-
-        public StaffController(IStaffService staffService, IConfiguration configuration)
+        private readonly ILogger<StaffController> _logger;
+        public StaffController(IStaffService staffService, IConfiguration configuration, ILogger<StaffController> logger)
         {
             _staffService = staffService;
-
+            _logger = logger;
             _configuration = configuration;
         }
 
@@ -37,6 +37,7 @@ namespace Simple_System_for_registering_students.Controllers
 
             if (staffList.Count() == 0)
             {
+                _logger.LogError("There are no employees in the system.");
                 return NotFound(new { message = "There are no employees in the system." });
             }
 
@@ -53,6 +54,7 @@ namespace Simple_System_for_registering_students.Controllers
 
             if (staff == null)
             {
+                _logger.LogError("Employee is not present");
                 return NotFound(new { message = "Employee is not present" });
             }
 
@@ -69,7 +71,8 @@ namespace Simple_System_for_registering_students.Controllers
 
             if (staff == null)
             {
-                return NotFound(new { message = "الموظف غير موجود" });
+                _logger.LogError("Employee is not present");
+                return NotFound(new { message = "Employee is not present" });
             }
 
 
@@ -85,7 +88,7 @@ namespace Simple_System_for_registering_students.Controllers
             await _staffService.UpdateStaffAsync(staff);
 
 
-            return Ok(new { message = "تم تعديل الموظف بنجاح" });
+            return Ok(new { message = "The employee has been modified successfully." });
         }
 
 
@@ -101,24 +104,27 @@ namespace Simple_System_for_registering_students.Controllers
 
             if (staff == null)
             {
-                return NotFound(new { message = "الموظف غير موجود" });
+                _logger.LogError("Employee is not present");
+                return NotFound(new { message = "Employee is not present" });
             }
 
             if (permission == null)
             {
-                return NotFound(new { message = "error" });
+                _logger.LogError("Object cannot be empty");
+                return NotFound(new { message = "Object cannot be empty" });
             }
 
 
             if (!int.TryParse(permission.permissions, out int result))
             {
+                _logger.LogWarning("Input data is wrong");
                 return BadRequest(new { message = "Input data is wrong" });
             }
 
             await _staffService.UpdateRoleAsync(id, result);
 
 
-            return Ok(new { message = "تم تعديل صلاحية الموظف بنجاح" });
+            return Ok(new { message = "Employee permission has been modified successfully." });
         }
 
 
@@ -132,13 +138,14 @@ namespace Simple_System_for_registering_students.Controllers
 
             if (staff == null)
             {
-                return NotFound(new { message = "الموظف غير موجود" });
+                _logger.LogWarning("Employee is not present");
+                return NotFound(new { message = "Employee is not present" });
             }
 
 
             await _staffService.DeleteStaffAsync(id);
 
-            return Ok(new { message = "تم حذف الموظف بنجاح" });
+            return Ok(new { message = "The employee has been successfully deleted." });
         }
     }
 }

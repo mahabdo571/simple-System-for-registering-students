@@ -6,7 +6,9 @@ using Simple_System_for_registering_students.Services.Interface;
 
 namespace Simple_System_for_registering_students.Controllers
 {
-
+    /// <summary>
+    /// Controller responsible for handling user authentication and staff registration operations.
+    /// </summary>
     //[Route("api/[controller]")]
     [Route("api/Auth")]
     [ApiController]
@@ -16,16 +18,27 @@ namespace Simple_System_for_registering_students.Controllers
         private readonly IStaffService _staffService;
         private readonly ILogger<AuthController> _logger;
 
-
+        /// <summary>
+        /// Constructor for AuthController.
+        /// </summary>
+        /// <param name="authService">Service for authentication-related operations.</param>
+        /// <param name="staffService">Service for staff management operations.</param>
         public AuthController(IAuthService authService, IStaffService staffService, ILogger<AuthController> logger)
         {
-            _authService = authService;
-           
+            _authService = authService;           
             _staffService = staffService;
             _logger = logger;
         }
 
-  
+        /// <summary>
+        /// Handles user registration.
+        /// </summary>
+        /// <param name="registerModel">Data Transfer Object containing registration details.</param>
+        /// <returns>
+        /// - 200 OK if registration is successful.
+        /// - 400 Bad Request if the input data is invalid.
+        /// - 409 Conflict if the email is already in use.
+        /// </returns>
         [HttpPost("register",Name = "Register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -34,24 +47,28 @@ namespace Simple_System_for_registering_students.Controllers
         {
             if (registerModel == null)
             {
-                _logger.LogWarning("Input data is missing");
+                _logger.LogError("Input data is missing");
 
                 return BadRequest(new { message = "Input data is missing" });
             }
 
             if (string.IsNullOrEmpty(registerModel.Email) || string.IsNullOrEmpty(registerModel.Password)|| string.IsNullOrEmpty(registerModel.ConfirmPassword))
             {
+                _logger.LogError("Email and Password are required");
+
                 return BadRequest(new { message = "Email and Password are required" });
             }
 
             if (!registerModel.Password.Equals(registerModel.ConfirmPassword))
             {
+                _logger.LogWarning("Pass Not Match");
                 return BadRequest(new { message = "Pass Not Match" });
             }
       
             var existingUser = await _staffService.GetByEmailAsync(registerModel.Email);
             if (existingUser != null)
             {
+                _logger.LogWarning("Email is already in use");
                 return Conflict(new { message = "Email is already in use" });
             }
 
@@ -63,20 +80,26 @@ namespace Simple_System_for_registering_students.Controllers
                 Email = registerModel.Email,
                 PasswordHash = hashedPassword,
                 Username = registerModel.UserName,
-                
-                
-
-
 
             };
 
             await _staffService.RegisterStaffAsync(staff);
+      
 
-        
+
             return Ok();
         }
 
 
+        /// <summary>
+        /// Handles user login.
+        /// </summary>
+        /// <param name="loginModel">Data Transfer Object containing login details.</param>
+        /// <returns>
+        /// - 200 OK if login is successful, along with a JWT token.
+        /// - 400 Bad Request if the input data is invalid.
+        /// - 401 Unauthorized if the credentials are incorrect.
+        /// </returns>
         [HttpPost("login",Name = "Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,11 +108,13 @@ namespace Simple_System_for_registering_students.Controllers
         {
             if (loginModel == null)
             {
+                _logger.LogError("Login data is missing");
                 return BadRequest(new { message = "Login data is missing" });
             }
 
             if (string.IsNullOrEmpty(loginModel.Email) || string.IsNullOrEmpty(loginModel.Password))
             {
+                _logger.LogWarning("Email and Password are required");
                 return BadRequest(new { message = "Email and Password are required" });
             }
 
@@ -97,12 +122,13 @@ namespace Simple_System_for_registering_students.Controllers
 
             if (staff == null)
             {
+                _logger.LogWarning("Invalid email or password");
                 return Unauthorized(new { message = "Invalid email or password" });
             }
 
             var token = _authService.GenerateJwtToken(staff);
 
-            _logger.LogInformation("Login successful log");
+           
             return Ok(new { message = "Login successful" , token  });
         }
 

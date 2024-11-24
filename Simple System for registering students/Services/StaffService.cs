@@ -12,7 +12,8 @@ namespace Simple_System_for_registering_students.Services
     {
     
     
-        private readonly IStaffRepository _staffRepository ;
+        private  readonly IStaffRepository _staffRepository ;
+
 
 
         public StaffService(IStaffRepository staffRepository)
@@ -21,6 +22,7 @@ namespace Simple_System_for_registering_students.Services
          
             _staffRepository = staffRepository;
         }
+
 
         public async Task<Staff> AuthenticateAsync(string email, string password)
         {
@@ -109,6 +111,7 @@ namespace Simple_System_for_registering_students.Services
 
             await _staffRepository.UpdateRoleAsync(staffId, newRole);        
         }
+
 
 
 

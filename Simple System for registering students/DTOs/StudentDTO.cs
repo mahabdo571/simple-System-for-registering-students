@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Simple_System_for_registering_students.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Simple_System_for_registering_students.DTOs
 {
@@ -41,7 +43,7 @@ namespace Simple_System_for_registering_students.DTOs
             /// <summary>
             /// The gender of the student.
             /// </summary>
-            public string Gender { get; set; }
+            public bool Gender { get; set; }
 
             /// <summary>
             /// The address of the student.
@@ -53,7 +55,7 @@ namespace Simple_System_for_registering_students.DTOs
             /// </summary>
             public int StaffId { get; set; }
 
-        
+
 
     }
 }

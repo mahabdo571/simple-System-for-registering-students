@@ -25,12 +25,12 @@ namespace Simple_System_for_registering_students.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Fluent API configuration (optional)
+   
             modelBuilder.Entity<Staff>()
                 .HasMany(s => s.Students)
                 .WithOne(st => st.Staff)
                 .HasForeignKey(st => st.StaffId)
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete
+                .OnDelete(DeleteBehavior.Cascade); 
         }
     }
     }
