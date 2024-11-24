@@ -8,7 +8,7 @@ using Simple_System_for_registering_students.Services.Interface;
 namespace Simple_System_for_registering_students.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/Student")]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace Simple_System_for_registering_students.Controllers
             _studentService = studentService;
             _logger = logger;
         }
-        [AllowAnonymous]
+       
         [HttpGet("All", Name = "GetAllStudents")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -37,7 +37,7 @@ namespace Simple_System_for_registering_students.Controllers
             return Ok(staffList);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetStudentById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -65,5 +65,61 @@ namespace Simple_System_for_registering_students.Controllers
 
             return CreatedAtAction(nameof(GetAllStudents), new { id = student?.Id }, student);
         }
+
+
+
+        [HttpPut("{id}", Name = "StudentUpdateById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> StudentUpdateById(int id, [FromBody] StudentDto studentDTO)
+        {
+            var student = await _studentService.GetStudentByIdAsync(id);
+
+            if (student == null)
+            {
+                _logger.LogError("student is not present");
+                return NotFound(new { message = "student is not present" });
+            }
+
+
+            student.FirstName = studentDTO.FirstName;
+            student.LastName = studentDTO.LastName;
+            student.PhoneNumber = studentDTO.PhoneNumber;
+            student.StaffId = studentDTO.StaffId;
+            student.DateOfBirth = studentDTO.DateOfBirth;
+            student.Address = studentDTO.Address;
+            student.Gender = studentDTO.Gender;
+            student.Email = studentDTO.Email;
+            student.UpdatedAt = DateTime.Now;
+       
+
+      
+
+            await _studentService.UpdateStudentAsync(student);
+
+
+            return Ok(new { message = "The student has been modified successfully." });
+        }
+
+        [HttpDelete("{id}", Name = "DeleteStudent")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            var student = await _studentService.GetStudentByIdAsync(id);
+
+            if (student is null)
+            {
+                _logger.LogWarning("student is not present");
+                return NotFound(new { message = "student is not present" });
+            }
+
+
+            await _studentService.DeleteStudentAsync(id);
+
+            return Ok(new { message = "The student has been successfully deleted." });
+        }
+
     }
 }

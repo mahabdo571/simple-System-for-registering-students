@@ -46,5 +46,12 @@ namespace Simple_System_for_registering_students.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<Staff> GetStaffWithStudents(int staffId)
+        {
+            var staff =await _context.Staffs.FirstOrDefaultAsync<Staff>(s => s.Id == staffId);
+
+            return staff;
+        }
     }
 }

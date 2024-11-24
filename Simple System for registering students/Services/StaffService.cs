@@ -112,8 +112,9 @@ namespace Simple_System_for_registering_students.Services
             await _staffRepository.UpdateRoleAsync(staffId, newRole);        
         }
 
-
-
-
+        public Task<IEnumerable<Student>> GetStudentByStaffId(int staffId)
+        {
+            return _staffRepository.GetStudentByStaffId(staffId);
+        }
     }
 }

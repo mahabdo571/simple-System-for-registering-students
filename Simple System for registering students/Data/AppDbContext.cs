@@ -29,8 +29,11 @@ namespace Simple_System_for_registering_students.Data
             modelBuilder.Entity<Staff>()
                 .HasMany(s => s.Students)
                 .WithOne(st => st.Staff)
-                .HasForeignKey(st => st.StaffId)
-                .OnDelete(DeleteBehavior.Cascade); 
+                .HasForeignKey(st => st.StaffId)        
+                .OnDelete(DeleteBehavior.Cascade);
+
+   
+     
         }
     }
     }

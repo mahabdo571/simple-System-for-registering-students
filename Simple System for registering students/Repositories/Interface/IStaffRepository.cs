@@ -10,7 +10,7 @@ namespace Simple_System_for_registering_students.Repositories.Interface
         Task AddStaffAsync(Staff staff);
         Task UpdateStaffAsync(Staff staff);
         Task DeleteStaffAsync(int id);
-
+        Task<IEnumerable<Student>> GetStudentByStaffId(int staffId);
         Task<int> GetAllStaffsCountAsync();
         Task UpdateRoleAsync(int staffId, int newRole);
     }

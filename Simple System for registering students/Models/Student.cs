@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Simple_System_for_registering_students.Models
 {   
@@ -68,6 +69,7 @@ namespace Simple_System_for_registering_students.Models
         /// The staff member who added the student.
         /// </summary>
         [ForeignKey(nameof(StaffId))]
+        [JsonIgnore]
         public Staff Staff { get; set; }
 
         /// <summary>

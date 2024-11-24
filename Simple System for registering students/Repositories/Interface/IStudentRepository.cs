@@ -9,5 +9,6 @@ namespace Simple_System_for_registering_students.Repositories.Interface
         Task AddStudentAsync(Student student);
         Task UpdateStudentAsync(Student student);
         Task DeleteStudentAsync(int id);
+        Task<Staff> GetStaffWithStudents(int staffId);
     }
 }

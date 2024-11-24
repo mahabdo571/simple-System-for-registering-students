@@ -60,6 +60,22 @@ namespace Simple_System_for_registering_students.Controllers
 
             return Ok(staff);
         }
+        [AllowAnonymous]
+        [HttpGet("StudentByStaffId/{staffId}", Name = "GetStudentByStaffId")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetStudentByStaffId(int staffId)
+        {
+            var Studens = await _staffService.GetStudentByStaffId(staffId);
+
+            if ( Studens == null)
+            {
+                _logger.LogError("Employee is not present");
+                return NotFound(new { message = "Employee is not present" });
+            }
+
+            return Ok(Studens);
+        }
 
 
         [HttpPut("{id}", Name = "StaffUpdateById")]

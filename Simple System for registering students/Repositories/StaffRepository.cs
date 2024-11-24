@@ -72,5 +72,9 @@ namespace Simple_System_for_registering_students.Repositories
             }
         }
 
+        public async Task<IEnumerable<Student>> GetStudentByStaffId(int staffId)
+        {
+            return await _context.Students.Where((st)=> st.StaffId == staffId).ToListAsync();
+        }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Simple_System_for_registering_students.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStaffAndStudentTable : Migration
+    public partial class ssfrsTb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

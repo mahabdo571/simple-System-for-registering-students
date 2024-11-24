@@ -12,10 +12,12 @@ namespace Simple_System_for_registering_students.Services
     {
 
         private readonly IStudentRepository _studentRepository;
+        private readonly IStaffRepository _staffRepository;
 
-        public StudentService(IStudentRepository studentRepository)
+        public StudentService(IStudentRepository studentRepository, IStaffRepository staffRepository)
         {
             _studentRepository = studentRepository;
+            _staffRepository = staffRepository;
         }
 
         public async Task<IEnumerable<Student>?>  GetAllStudentsAsync()
@@ -26,7 +28,12 @@ namespace Simple_System_for_registering_students.Services
 
             return students is not null ? students : null;
         }
+        public async Task<Staff> GetStaffWithStudents(int staffId)
+        {
+            var staff =await _studentRepository.GetStaffWithStudents(staffId);
 
+            return staff;
+        }
         public async Task<Student?> AddStudentAsync(StudentDto studentDTO)
         {
             var student = new Student
@@ -39,7 +46,7 @@ namespace Simple_System_for_registering_students.Services
                 Gender = studentDTO.Gender,
                 PhoneNumber =studentDTO.PhoneNumber,
                 StaffId = studentDTO.StaffId,
-             
+             Staff =await GetStaffWithStudents(studentDTO.StaffId),
 
 
             };
@@ -58,5 +65,22 @@ namespace Simple_System_for_registering_students.Services
 
             return student is not null ? student : null;
         }
+
+        public async Task UpdateStudentAsync(Student student)
+        {
+         var x = await _staffRepository.GetStaffByIdAsync(student.StaffId);
+
+            if (x is not null && (enPermissions.Read | enPermissions.Modify) ==(enPermissions)x.Role)
+            {
+               
+                await _studentRepository.UpdateStudentAsync(student);
+            }
+        }
+
+        public async Task DeleteStudentAsync(int id)
+        {
+            await _studentRepository.DeleteStudentAsync(id);
+        }
+
     }
 }

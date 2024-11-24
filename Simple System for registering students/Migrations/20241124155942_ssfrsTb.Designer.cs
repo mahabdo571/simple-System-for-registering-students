@@ -12,8 +12,8 @@ using Simple_System_for_registering_students.Data;
 namespace Simple_System_for_registering_students.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241124074407_AddStaffAndStudentTable")]
-    partial class AddStaffAndStudentTable
+    [Migration("20241124155942_ssfrsTb")]
+    partial class ssfrsTb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

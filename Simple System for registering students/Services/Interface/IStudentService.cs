@@ -8,6 +8,7 @@ namespace Simple_System_for_registering_students.Services.Interface
         Task<IEnumerable<Student>?> GetAllStudentsAsync();
         Task<Student?> AddStudentAsync(StudentDto studentDTO);
         Task<Student?> GetStudentByIdAsync(int id);
-
+        Task UpdateStudentAsync(Student student);
+        Task DeleteStudentAsync(int id);
     }
 }
