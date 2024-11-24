@@ -1,3 +1,4 @@
+````markdown
 # Authentication Controller - API Documentation
 
 ## Overview
@@ -24,7 +25,6 @@ This document provides detailed information on how to interact with these endpoi
   "ConfirmPassword": "strongpassword" // Password confirmation (required).
 }
 ```
-
 ````
 
 - **Email**: The email address of the user to be registered.
@@ -34,19 +34,25 @@ This document provides detailed information on how to interact with these endpoi
 #### Responses:
 
 - **200 OK**: Registration successful.
+
   - Example response:
+
   ```json
   {
     "message": "Registration successful"
   }
   ```
+
 - **400 Bad Request**: Invalid input data (e.g., missing required fields, password mismatch).
+
   - Example response:
+
   ```json
   {
     "message": "Email and Password are required"
   }
   ```
+
 - **409 Conflict**: The provided email is already in use by another account.
   - Example response:
   ```json
@@ -81,21 +87,28 @@ This document provides detailed information on how to interact with these endpoi
 #### Responses:
 
 - **200 OK**: Login successful, with a JWT token.
+
   - Example response:
+
   ```json
   {
     "message": "Login successful",
     "token": "your-jwt-token"
   }
   ```
+
   - The `token` will be used for authenticating further requests that require a logged-in user.
+
 - **400 Bad Request**: Missing or invalid input data (e.g., missing email or password).
+
   - Example response:
+
   ```json
   {
     "message": "Email and Password are required"
   }
   ```
+
 - **401 Unauthorized**: Incorrect email or password.
   - Example response:
   ```json
@@ -179,4 +192,7 @@ POST /api/Auth/login
 This API provides a simple way to register new users and authenticate them using a JWT token. It ensures that passwords are securely hashed and provides appropriate error handling in case of invalid data or failed login attempts.
 
 Make sure to secure your JWT tokens and use them for authenticating further requests to protected endpoints.
-````
+
+```
+
+```
