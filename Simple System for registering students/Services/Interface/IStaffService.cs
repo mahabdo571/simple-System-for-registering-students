@@ -12,6 +12,7 @@ namespace Simple_System_for_registering_students.Services.Interface
         Task RegisterStaffAsync(Staff staff);
         Task UpdateStaffAsync(Staff staff);
         Task DeleteStaffAsync(int id);
+        Task UpdateRoleAsync(int staffId, int newRole);
 
     }
 }

@@ -5,19 +5,20 @@ using Simple_System_for_registering_students.Repositories;
 using Simple_System_for_registering_students.Repositories.Interface;
 using Simple_System_for_registering_students.Services.Interface;
 
+
 namespace Simple_System_for_registering_students.Services
 {
     public class StaffService : IStaffService
     {
-        private readonly AppDbContext _context;
-        private readonly IConfiguration _configuration;
+    
+    
         private readonly IStaffRepository _staffRepository ;
 
 
-        public StaffService(AppDbContext context, IConfiguration configuration, IStaffRepository staffRepository)
+        public StaffService(IStaffRepository staffRepository)
         {
-            _context = context;
-            _configuration = configuration;
+       
+         
             _staffRepository = staffRepository;
         }
 
@@ -71,10 +72,27 @@ namespace Simple_System_for_registering_students.Services
             return await _staffRepository.GetStaffByIdAsync(id);
         }
 
+        private async Task<bool> IsFirstStaffAsync()
+        {
+            return await _staffRepository.GetAllStaffsCountAsync() == 0;
+        }
+ 
+
         public async Task AddStaffAsync(Staff staff)
         {
-           await _staffRepository.AddStaffAsync(staff);
+            if(await IsFirstStaffAsync())
+            {
+               staff.Role = 1;
+            }
+           
+            await _staffRepository.AddStaffAsync(staff);
+            
+         
         }
+
+
+
+ 
 
         public async Task UpdateStaffAsync(Staff staff)
         {
@@ -83,6 +101,16 @@ namespace Simple_System_for_registering_students.Services
 
         public async Task DeleteStaffAsync(int id)
         {
-            await _staffRepository.DeleteStaffAsync(id);        }
+            await _staffRepository.DeleteStaffAsync(id);        
+        }  
+        
+        public async Task UpdateRoleAsync(int staffId, int newRole)
+        { 
+
+            await _staffRepository.UpdateRoleAsync(staffId, newRole);        
+        }
+
+
+
     }
 }

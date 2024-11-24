@@ -51,7 +51,7 @@ namespace Simple_System_for_registering_students.Models
         /// The gender of the student (male or female).
         /// </summary>
         [Required]
-        public string Gender { get; set; }
+        public bool Gender { get; set; } //true=Male / false =Fmale
 
         /// <summary>
         /// The address of the student.

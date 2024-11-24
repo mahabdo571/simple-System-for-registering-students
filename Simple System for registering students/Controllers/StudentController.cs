@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Simple_System_for_registering_students.DTOs;
 using Simple_System_for_registering_students.Services.Interface;
@@ -18,7 +17,7 @@ namespace Simple_System_for_registering_students.Controllers
         {
             _service = service;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllStudents()
         {

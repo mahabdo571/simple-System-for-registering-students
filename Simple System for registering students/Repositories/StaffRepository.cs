@@ -26,6 +26,11 @@ namespace Simple_System_for_registering_students.Repositories
             return await _context.Staffs.ToListAsync();
         }
 
+        public async Task<int> GetAllStaffsCountAsync()
+        {
+            return await _context.Staffs.CountAsync();
+        }
+
         public async Task<Staff> GetStaffByIdAsync(int id)
         {
             return await _context.Staffs.FindAsync(id);
@@ -52,5 +57,16 @@ namespace Simple_System_for_registering_students.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateRoleAsync(int staffId, int newRole)
+        {
+            var staff = await _context.Staffs.FindAsync(staffId);
+            if (staff != null)
+            {
+                staff.Role = newRole; 
+                await _context.SaveChangesAsync(); 
+            }
+        }
+
     }
 }

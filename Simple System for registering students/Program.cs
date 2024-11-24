@@ -9,6 +9,9 @@ using Simple_System_for_registering_students.Services.Interface;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Jose;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +36,11 @@ builder.Services.AddScoped<IStaffService, StaffService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
-
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -50,6 +57,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+
+
+if (OperatingSystem.IsWindows()) 
+{
+    builder.Logging.AddEventLog(eventLogSettings =>
+    {
+        eventLogSettings.SourceName = "SSFRS"; 
+    });
+}
+
+
+builder.Logging.AddConsole();
+
+
+builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 
 builder.Services.AddControllers();
@@ -70,3 +92,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

@@ -38,8 +38,7 @@ namespace Simple_System_for_registering_students.Models
         /// The role of the staff member (e.g., admin or staff).
         /// </summary>
         [Required]
-        [MaxLength(50)]
-        public string Role { get; set; }
+        public int Role { get; set; }
 
         /// <summary>
         /// The date and time when the staff member was created.
