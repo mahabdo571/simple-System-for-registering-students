@@ -15,8 +15,6 @@ namespace Simple_System_for_registering_students.DTOs
         [MinLength(6, ErrorMessage = "Password should be at least 6 characters")]
         public string Password { get; set; }
 
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
         [Required]
         public int Role { get; set; }
 

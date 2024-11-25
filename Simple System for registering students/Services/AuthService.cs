@@ -40,6 +40,7 @@ namespace Simple_System_for_registering_students.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, staff.Id.ToString()),
                 new Claim(ClaimTypes.Name, staff.Username),
+                new Claim(ClaimTypes.Role, staff.Role.ToString()),
                 new Claim(ClaimTypes.Email, staff.Email)
             };
 

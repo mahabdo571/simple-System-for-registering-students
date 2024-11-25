@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Simple_System_for_registering_students.Data;
@@ -34,6 +34,7 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IStaffService, StaffService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddControllers()
@@ -84,7 +85,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseAuthentication(); // إذا كنت تستخدم مصادقة JWT
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -3,10 +3,9 @@
 [Flags] 
 public enum enPermissions
 {
-    None = 0,
-    Read = 1,    
-    Write = 2,  
-    Delete = 4,  
-    Modify = 8 
+    None = 1,
+    Admin = 2, //add - delete - update - edit roal - staff And student
+    Manger = 4,  //add - delete - update - just student
+
 }
 
