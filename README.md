@@ -1,3 +1,74 @@
+# Simple System for Registering Students
+
+This project is a simple system designed for registering students, managing staff, and assigning roles. It is built using **ASP.NET Core** and **Entity Framework** with a clean architecture structure that separates concerns into repositories, services, and controllers.
+
+## Project Structure
+
+### 1. **Repositories**
+   - **IStudentRepository**: Interface for student-related database operations.
+   - **IStaffRepository**: Interface for staff-related database operations.
+   - **StudentRepository**: Implementation of `IStudentRepository` handling database operations for students.
+   - **StaffRepository**: Implementation of `IStaffRepository` handling database operations for staff.
+
+### 2. **Services**
+   - **IStudentService**: Interface that defines business logic related to student management.
+   - **IStaffService**: Interface that defines business logic related to staff management.
+   - **StudentService**: Implementation of `IStudentService` that includes logic for adding, updating, and deleting students.
+   - **StaffService**: Implementation of `IStaffService` that includes logic for authentication, staff registration, role management, and student assignment.
+
+### 3. **DTOs**
+   - **StudentDto**: Data Transfer Object used for adding new students with only essential fields.
+
+### 4. **Models**
+   - **Student**: Represents a student with properties like `FirstName`, `LastName`, `Email`, etc.
+   - **Staff**: Represents a staff member with properties like `Email`, `PasswordHash`, and `Role`.
+
+### 5. **Utilities**
+   - **BCrypt**: Used for hashing passwords to ensure secure staff authentication.
+
+## Key Features
+
+- **Staff Authentication**: Staff can log in using email and password, where the password is securely hashed using BCrypt.
+- **Permissions and Roles**: The system implements role-based access control, where only Admins or Managers can access specific functionalities like adding or deleting students.
+- **Student Management**: Admins or Managers can add, update, and delete students, and view all students assigned to a specific staff member.
+- **Staff Role Management**: Admins can manage staff roles, including updating the role of a staff member.
+  
+## How It Works
+
+### 1. **Authentication**
+
+   - Staff authentication is handled via the `StaffService` using the email and password, with password verification done using `BCrypt`.
+   
+### 2. **Student Management**
+
+   - **Add Student**: Admins or Managers can add new students via `StudentService`. The system allows adding a student with basic details like name, email, phone number, and staff assignment.
+   - **Get All Students**: Admins or Managers can view all students.
+   - **Update and Delete Student**: Admins or Managers can update student details or delete a student from the system.
+
+### 3. **Role Management**
+
+   - Staff roles can be updated by the Admin using the `UpdateRoleAsync` method.
+   - The first staff member added will automatically be assigned an Admin role.
+
+### 4. **Permissions Check**
+
+   - Role-based permissions ensure that only authorized users (Admin/Manager) can perform sensitive actions like adding or deleting staff, updating roles, and viewing students.
+
+## Technologies Used
+
+- **ASP.NET Core**: Framework for building the web application.
+- **Entity Framework Core**: ORM used for database operations.
+- **BCrypt.Net**: For password hashing and authentication.
+- **SQL Server**: Database for storing the staff and student records.
+
+## Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/simple-system-for-registering-students.git
+
+
+
 ````markdown
 # Authentication Controller - API Documentation
 
