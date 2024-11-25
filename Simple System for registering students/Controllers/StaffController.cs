@@ -96,7 +96,6 @@ namespace Simple_System_for_registering_students.Controllers
         /// </summary>
         /// <param name="staffId">The unique ID of the staff member</param>
         /// <returns>A list of students or a not found message if no students are associated with the staff member.</returns>
-        [AllowAnonymous]
         [HttpGet("StudentByStaffId/{staffId}", Name = "GetStudentByStaffId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

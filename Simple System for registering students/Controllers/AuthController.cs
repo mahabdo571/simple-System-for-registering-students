@@ -80,6 +80,7 @@ namespace Simple_System_for_registering_students.Controllers
                 Email = registerModel.Email,
                 PasswordHash = hashedPassword,
                 Username = registerModel.UserName,
+                Role=1
 
             };
 

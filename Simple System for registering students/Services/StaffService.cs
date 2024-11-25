@@ -229,6 +229,7 @@ namespace Simple_System_for_registering_students.Services
             return (staff is not null && ((enPermissions)staff.Role & enPermissions.Admin) == enPermissions.Admin);
             
         }
+
         /// <summary>
         /// Retrieves the ID of the currently authenticated user.
         /// </summary>

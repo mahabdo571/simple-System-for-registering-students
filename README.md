@@ -1,30 +1,49 @@
 # Simple System for Registering Students
 
 This project is a simple system designed for registering students, managing staff, and assigning roles. It is built using **ASP.NET Core** and **Entity Framework** with a clean architecture structure that separates concerns into repositories, services, and controllers.
+Add Migration and Update Database
+After configuring the database settings in the appsettings.json file, you can generate and update the database using Entity Framework Core by running the following commands:
+
+Add a New Migration: To generate a migration based on the changes made to your models or database, run the following command:
+
+--Add-Migration <Migration_Name>
+
+Replace <Migration_Name> with a descriptive name for the migration.
+
+Update the Database: After creating the migration, apply it to the database to update its structure by running:
+
+--Update-Database
+
+Once these commands are executed, the database will be created or updated according to the migration changes.
 
 ## Project Structure
 
 ### 1. **Repositories**
-   - **IStudentRepository**: Interface for student-related database operations.
-   - **IStaffRepository**: Interface for staff-related database operations.
-   - **StudentRepository**: Implementation of `IStudentRepository` handling database operations for students.
-   - **StaffRepository**: Implementation of `IStaffRepository` handling database operations for staff.
+
+- **IStudentRepository**: Interface for student-related database operations.
+- **IStaffRepository**: Interface for staff-related database operations.
+- **StudentRepository**: Implementation of `IStudentRepository` handling database operations for students.
+- **StaffRepository**: Implementation of `IStaffRepository` handling database operations for staff.
 
 ### 2. **Services**
-   - **IStudentService**: Interface that defines business logic related to student management.
-   - **IStaffService**: Interface that defines business logic related to staff management.
-   - **StudentService**: Implementation of `IStudentService` that includes logic for adding, updating, and deleting students.
-   - **StaffService**: Implementation of `IStaffService` that includes logic for authentication, staff registration, role management, and student assignment.
+
+- **IStudentService**: Interface that defines business logic related to student management.
+- **IStaffService**: Interface that defines business logic related to staff management.
+- **StudentService**: Implementation of `IStudentService` that includes logic for adding, updating, and deleting students.
+- **StaffService**: Implementation of `IStaffService` that includes logic for authentication, staff registration, role management, and student assignment.
 
 ### 3. **DTOs**
-   - **StudentDto**: Data Transfer Object used for adding new students with only essential fields.
+
+- **StudentDto**: Data Transfer Object used for adding new students with only essential fields.
 
 ### 4. **Models**
-   - **Student**: Represents a student with properties like `FirstName`, `LastName`, `Email`, etc.
-   - **Staff**: Represents a staff member with properties like `Email`, `PasswordHash`, and `Role`.
+
+- **Student**: Represents a student with properties like `FirstName`, `LastName`, `Email`, etc.
+- **Staff**: Represents a staff member with properties like `Email`, `PasswordHash`, and `Role`.
 
 ### 5. **Utilities**
-   - **BCrypt**: Used for hashing passwords to ensure secure staff authentication.
+
+- **BCrypt**: Used for hashing passwords to ensure secure staff authentication.
 
 ## Key Features
 
@@ -32,27 +51,27 @@ This project is a simple system designed for registering students, managing staf
 - **Permissions and Roles**: The system implements role-based access control, where only Admins or Managers can access specific functionalities like adding or deleting students.
 - **Student Management**: Admins or Managers can add, update, and delete students, and view all students assigned to a specific staff member.
 - **Staff Role Management**: Admins can manage staff roles, including updating the role of a staff member.
-  
+
 ## How It Works
 
 ### 1. **Authentication**
 
-   - Staff authentication is handled via the `StaffService` using the email and password, with password verification done using `BCrypt`.
-   
+- Staff authentication is handled via the `StaffService` using the email and password, with password verification done using `BCrypt`.
+
 ### 2. **Student Management**
 
-   - **Add Student**: Admins or Managers can add new students via `StudentService`. The system allows adding a student with basic details like name, email, phone number, and staff assignment.
-   - **Get All Students**: Admins or Managers can view all students.
-   - **Update and Delete Student**: Admins or Managers can update student details or delete a student from the system.
+- **Add Student**: Admins or Managers can add new students via `StudentService`. The system allows adding a student with basic details like name, email, phone number, and staff assignment.
+- **Get All Students**: Admins or Managers can view all students.
+- **Update and Delete Student**: Admins or Managers can update student details or delete a student from the system.
 
 ### 3. **Role Management**
 
-   - Staff roles can be updated by the Admin using the `UpdateRoleAsync` method.
-   - The first staff member added will automatically be assigned an Admin role.
+- Staff roles can be updated by the Admin using the `UpdateRoleAsync` method.
+- The first staff member added will automatically be assigned an Admin role.
 
 ### 4. **Permissions Check**
 
-   - Role-based permissions ensure that only authorized users (Admin/Manager) can perform sensitive actions like adding or deleting staff, updating roles, and viewing students.
+- Role-based permissions ensure that only authorized users (Admin/Manager) can perform sensitive actions like adding or deleting staff, updating roles, and viewing students.
 
 ## Technologies Used
 
@@ -66,8 +85,7 @@ This project is a simple system designed for registering students, managing staf
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/simple-system-for-registering-students.git
-
-
+   ```
 
 ````markdown
 # Authentication Controller - API Documentation
