@@ -76,6 +76,18 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 
 builder.Services.AddControllers();
+builder.WebHost.UseUrls("http://0.0.0.0:5171");
+
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins("http://localhost:53496/", "http://localhost:5171/", "http://192.168.1.24:5171/") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 

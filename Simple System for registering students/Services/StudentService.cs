@@ -92,8 +92,8 @@ namespace Simple_System_for_registering_students.Services
                 DateOfBirth = studentDTO.DateOfBirth,
                 Gender = studentDTO.Gender,
                 PhoneNumber = studentDTO.PhoneNumber,
-                StaffId = studentDTO.StaffId,
-                Staff = await GetStaffWithStudents(studentDTO.StaffId),
+                StaffId = GetStaffId(), 
+                Staff = await GetStaffWithStudents(GetStaffId()),
 
 
             };
@@ -133,7 +133,7 @@ namespace Simple_System_for_registering_students.Services
 
                 throw new Exception("You do not have sufficient permission.");
             }
-
+            student.StaffId = GetStaffId();
             await _studentRepository.UpdateStudentAsync(student);
         }
 
@@ -158,7 +158,7 @@ namespace Simple_System_for_registering_students.Services
         private async Task<bool> _checkPermissionIsAdminOrManger()
         {
 
-            var staff = await _staffRepository.GetStaffByIdAsync(GetUserId());
+            var staff = await _staffRepository.GetStaffByIdAsync(GetStaffId());
 
             return (staff is not null && ((enPermissions)staff.Role & enPermissions.Manger) == enPermissions.Manger);
 
@@ -168,7 +168,7 @@ namespace Simple_System_for_registering_students.Services
         /// Retrieves the ID of the currently authenticated user.
         /// </summary>
         /// <returns>The user ID if authenticated; otherwise, -1.</returns>
-        public int GetUserId()
+        public int GetStaffId()
         {
             var user = _httpContextAccessor.HttpContext?.User;
             if (user == null || !user.Identity.IsAuthenticated)

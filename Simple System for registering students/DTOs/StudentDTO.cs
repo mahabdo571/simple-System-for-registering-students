@@ -53,7 +53,7 @@ namespace Simple_System_for_registering_students.DTOs
             /// <summary>
             /// The ID of the staff member who created the student.
             /// </summary>
-            public int StaffId { get; set; }
+           // public int StaffId { get; set; }
 
 
 

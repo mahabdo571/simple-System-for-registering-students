@@ -103,12 +103,27 @@ namespace Simple_System_for_registering_students.Controllers
         /// <returns>The created student data along with its ID.</returns>
         [HttpPost(Name = "AddStudent")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddStudent([FromBody] StudentDto studentDTO)
         {
-            var student = await _studentService.AddStudentAsync(studentDTO);
 
+           
+            try
+            {
+                var student = await _studentService.AddStudentAsync(studentDTO);
+                return CreatedAtAction(nameof(GetAllStudents), new { id = student?.Id }, student);
 
-            return CreatedAtAction(nameof(GetAllStudents), new { id = student?.Id }, student);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return Problem(
+            detail: ex.Message,
+            statusCode: 403,
+            title: "Forbidden"
+        );
+            }
+
         }
 
 
@@ -136,7 +151,7 @@ namespace Simple_System_for_registering_students.Controllers
             student.FirstName = studentDTO.FirstName;
             student.LastName = studentDTO.LastName;
             student.PhoneNumber = studentDTO.PhoneNumber;
-            student.StaffId = studentDTO.StaffId;
+         
             student.DateOfBirth = studentDTO.DateOfBirth;
             student.Address = studentDTO.Address;
             student.Gender = studentDTO.Gender;
